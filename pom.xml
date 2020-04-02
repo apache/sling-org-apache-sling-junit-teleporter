@@ -58,7 +58,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M4</version>
         <configuration>
           <systemPropertyVariables>
             <http.port>${http.port}</http.port>
@@ -147,12 +146,6 @@
       <groupId>org.osgi</groupId>
       <artifactId>osgi.core</artifactId>
       <scope>provided</scope>
-    </dependency>
-    <!-- xml bind jdk 9 and above -->
-    <dependency>
-      <groupId>jakarta.xml.bind</groupId>
-      <artifactId>jakarta.xml.bind-api</artifactId>
-      <version>2.3.2</version>
     </dependency>
   </dependencies>
   
