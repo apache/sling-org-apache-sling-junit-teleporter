@@ -41,8 +41,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.sling.junit.rules.TeleporterRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
-import org.ops4j.pax.tinybundles.core.TinyBundle;
-import org.ops4j.pax.tinybundles.core.TinyBundles;
+import org.ops4j.pax.tinybundles.TinyBundle;
+import org.ops4j.pax.tinybundles.TinyBundles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.NOPLogger;
@@ -78,26 +78,26 @@ public class ClientSideTeleporter extends TeleporterRule {
     
     private InputStream buildTestBundle(Class<?> c, Collection<Class<?>> embeddedClasses, String bundleSymbolicName) throws IOException {
         final TinyBundle b = TinyBundles.bundle()
-            .set("Bundle-SymbolicName", bundleSymbolicName)
-            .set("Sling-Test-Regexp", c.getName() + ".*")
-            .set("Sling-Test-WaitForService-Timeout", Integer.toString(waitForServiceTimout))
-            .add(c);
+            .setHeader("Bundle-SymbolicName", bundleSymbolicName)
+            .setHeader("Sling-Test-Regexp", c.getName() + ".*")
+            .setHeader("Sling-Test-WaitForService-Timeout", Integer.toString(waitForServiceTimout))
+            .addClass(c);
 
         for(Map.Entry<String, String> header : additionalBundleHeaders.entrySet()) {
             log.info("Add bundle header '{}' with value '{}'", header.getKey(), header.getValue());
-            b.set(header.getKey(), header.getValue());
+            b.setHeader(header.getKey(), header.getValue());
         }
         
         // enrich embedded classes by automatically detected dependencies
         for(Class<?> clz : dependencyAnalyzer.getDependencies(log)) {
             log.debug("Embed dependent class '{}' because it is referenced and in the allowed package prefixes", clz);
-            b.add(clz);
+            b.addClass(clz);
         }
         
         // Embed specified classes
         for(Class<?> clz : embeddedClasses) {
             log.info("Embed class '{}'", clz);
-            b.add(clz);
+            b.addClass(clz);
         }
         
         // Embed specified resources
@@ -106,7 +106,7 @@ public class ClientSideTeleporter extends TeleporterRule {
                 final ClassResourceVisitor.Processor p = new ClassResourceVisitor.Processor() {
                     @Override
                     public void process(String resourcePath, InputStream resourceStream) throws IOException {
-                        b.add(resourcePath, resourceStream);
+                        b.addResource(resourcePath, resourceStream);
                         log.info("Embed resource '{}'", resourcePath);
                     }
                     
@@ -115,7 +115,7 @@ public class ClientSideTeleporter extends TeleporterRule {
             }
         }
         
-        return b.build(TinyBundles.withBnd());
+        return b.build(TinyBundles.bndBuilder());
     }
     
     public void setBaseUrl(String url) {
