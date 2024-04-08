@@ -23,13 +23,13 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -43,7 +43,6 @@ import javax.json.JsonString;
 import javax.json.JsonValue;
 import javax.json.JsonValue.ValueType;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
@@ -106,11 +105,9 @@ class TeleporterHttpClient {
     }
 
     static String encodeBase64(String data) {
-        try {
-            return Base64.encodeBase64String(data.getBytes("UTF-8"));
-        } catch(UnsupportedEncodingException uee) {
-            throw new RuntimeException(uee);
-        }
+        byte[] encoded = Base64.getEncoder().encode(data.getBytes(StandardCharsets.UTF_8));
+        return new String(encoded, StandardCharsets.UTF_8);
+        
     }
     
     public void setConnectionCredentials(URLConnection c) {
