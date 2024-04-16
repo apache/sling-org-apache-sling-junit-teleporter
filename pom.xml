@@ -126,13 +126,13 @@
       <groupId>org.ops4j.base</groupId>
       <artifactId>ops4j-base-store</artifactId>
       <version>1.5.1</version>
-      <scope>compile</scope>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>biz.aQute.bnd</groupId>
       <artifactId>biz.aQute.bndlib</artifactId>
       <version>6.4.1</version>
-      <scope>compile</scope>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>com.github.tomakehurst</groupId>
