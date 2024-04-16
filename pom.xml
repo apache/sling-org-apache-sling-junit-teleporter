@@ -122,12 +122,14 @@
       <artifactId>slf4j-simple</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- keep Maven compile classpath consistent after upgrading to tinybundles 4.0.0 -->
     <dependency>
       <groupId>org.ops4j.base</groupId>
       <artifactId>ops4j-base-store</artifactId>
       <version>1.5.1</version>
       <scope>runtime</scope>
     </dependency>
+    <!-- keep Maven compile classpath consistent after upgrading to tinybundles 4.0.0 -->
     <dependency>
       <groupId>biz.aQute.bnd</groupId>
       <artifactId>biz.aQute.bndlib</artifactId>
