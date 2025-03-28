@@ -88,17 +88,21 @@
     <dependency>
       <groupId>org.apache.sling</groupId>
       <artifactId>org.apache.sling.junit.core</artifactId>
-      <version>1.0.30</version>
+      <version>1.1.7-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.sling</groupId>
-      <artifactId>org.apache.sling.commons.johnzon</artifactId>
-      <version>1.2.0</version>
-      <!-- this dependency is necessary at test execution time from dependent modules 
-           and must therefore be available transitively 
-           (https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope) -->
-      <scope>runtime</scope> 
+        <groupId>jakarta.json</groupId>
+        <artifactId>jakarta.json-api</artifactId>
+        <version>2.0.2</version>
+        <scope>provided</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.johnzon</groupId>
+        <artifactId>johnzon-core</artifactId>
+        <version>1.2.21</version>
+        <classifier>jakarta</classifier>
+        <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
